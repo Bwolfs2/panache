@@ -11,7 +11,6 @@ import 'src/web_theme_service.dart';
 void main() async {
   clearPersisted();
   final localData = WebLocalData();
-  await localData.init();
 
   final themeModel = ThemeModel(
     localData: localData,
