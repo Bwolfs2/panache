@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:panache_core/panache_core.dart';
 
-import '../drive_menu.dart';
-
 class MobilePanacheEditorTopbar extends StatelessWidget implements PreferredSizeWidget {
   final bool isMobileInPortrait;
   final ThemeModel model;
@@ -27,10 +25,6 @@ class MobilePanacheEditorTopbar extends StatelessWidget implements PreferredSize
             icon: Icon(showCode ? Icons.mobile_screen_share : Icons.keyboard),
             onPressed: () => onShowCodeChanged(!showCode),
           ),
-          DriveMenu(
-            model: model,
-            userService: null,
-          ),
           IconButton(
             icon: Icon(Icons.close),
             onPressed: () => Navigator.of(context).maybePop(),
@@ -54,10 +48,10 @@ class MobilePanacheEditorTopbar extends StatelessWidget implements PreferredSize
           label: Text('Code preview'),
           onPressed: showCode ? null : () => onShowCodeChanged(true),
         ),
-        DriveMenu(
-          model: model,
-          userService: null,
-        )
+        // DriveMenu(
+        //   model: model,
+        //   userService: null,
+        // )
       ],
     );
   }

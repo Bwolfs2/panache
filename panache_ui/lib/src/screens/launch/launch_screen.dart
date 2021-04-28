@@ -47,7 +47,6 @@ class LaunchScreenState extends State<LaunchScreen> {
             newTheme: _newTheme,
             editMode: editMode,
             toggleEditMode: () => setState(() => editMode = !editMode),
-            buildThemeThumbs: _buildThemeThumbs,
           ),
         );
       })),
@@ -58,17 +57,6 @@ class LaunchScreenState extends State<LaunchScreen> {
 
   void onBrightnessSelection(Brightness value) => setState(() => initialBrightness = value);
 
-  List<Widget> _buildThemeThumbs(List<PanacheTheme> themes, {String basePath, Size size}) => themes
-      .map<Widget>((f) => ScreenshotRenderer(
-            theme: f,
-            removable: editMode,
-            basePath: basePath,
-            onThemeSelection: _loadTheme,
-            onDeleteTheme: widget.model.deleteTheme, //TODO: Aqui esta funcionando?
-            size: size,
-          ))
-      .toList();
-
   _newTheme(ThemeModel model) {
     model.newTheme(primarySwatch: newThemePrimary, brightness: initialBrightness);
     _editTheme();
@@ -76,15 +64,15 @@ class LaunchScreenState extends State<LaunchScreen> {
 
   _editTheme() => Navigator.of(context).pushNamed('/editor');
 
-  Future _loadTheme(PanacheTheme theme) async {
-    final result = await widget.model.loadTheme(theme);
-    if (result != null) {
-      _editTheme();
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Error : Can\'t load this theme.'),
-        backgroundColor: Colors.red.shade700,
-      ));
-    }
-  }
+  // Future _loadTheme(PanacheTheme theme) async {
+  //   final result = await widget.model.loadTheme(theme);
+  //   if (result != null) {
+  //     _editTheme();
+  //   } else {
+  //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+  //       content: Text('Error : Can\'t load this theme.'),
+  //       backgroundColor: Colors.red.shade700,
+  //     ));
+  //   }
+  // }
 }

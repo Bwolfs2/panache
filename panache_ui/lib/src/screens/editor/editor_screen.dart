@@ -15,20 +15,19 @@ class PanacheEditorScreen extends StatefulWidget {
 
 class PanacheEditorScreenState extends State<PanacheEditorScreen> {
   bool showCode = false;
+  bool initialized = false;
 
   @override
   Widget build(BuildContext context) {
-    final orientation = MediaQuery.of(context).orientation;
-    final inPortrait = orientation == Orientation.portrait;
-    final isLargeLayout = MediaQuery.of(context).size.shortestSide >= 600;
-    final isMobileInPortrait = inPortrait && !isLargeLayout;
-
     return ScopedModelDescendant<ThemeModel>(builder: (context, child, model) {
+      if (!initialized) {
+        model.newTheme(primarySwatch: Colors.blue, brightness: Brightness.light);
+        initialized = true;
+      }
+
       return _buildLargeLayout(
-        isMobileInPortrait,
         model,
         WebPanacheEditorTopbar(
-          isMobileInPortrait: isMobileInPortrait,
           model: model,
           showCode: showCode,
           onShowCodeChanged: (value) => setState(() => showCode = value),
@@ -37,7 +36,7 @@ class PanacheEditorScreenState extends State<PanacheEditorScreen> {
     });
   }
 
-  Scaffold _buildLargeLayout(bool isMobileInPortrait, ThemeModel model, Widget topbar) {
+  Scaffold _buildLargeLayout(ThemeModel model, Widget topbar) {
     return Scaffold(
       backgroundColor: Colors.grey.shade300,
       appBar: topbar,

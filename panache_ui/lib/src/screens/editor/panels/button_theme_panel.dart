@@ -28,23 +28,24 @@ class ButtonThemePanel extends StatelessWidget {
       color: Colors.grey.shade200,
       child: Column(
         children: <Widget>[
-          // FieldsRow([
-          //   ColorSelector(
-          //     'Raised button fill color',
-          //     buttonTheme.getFillColor(enabledRaisedButton),
-          //     /* TODO update theme.buttonColor ? */
-          //     (color) => _onButtonThemeChanged(buttonTheme.copyWith(buttonColor: color)),
-          //     padding: 2,
-          //     help: buttonColorHelp,
-          //   ),
-          //   ColorSelector(
-          //     'Raised button disabled color',
-          //     buttonTheme.getDisabledFillColor(disabledRaisedButton),
-          //     (color) => _onButtonThemeChanged(buttonTheme.copyWith(disabledColor: color)),
-          //     padding: 2,
-          //     help: disabledColorHelp,
-          //   ),
-          // ]),
+          //TODO: Corrigir
+          //FieldsRow([
+          //  ColorSelector(
+          //    'Raised button fill color',
+          //    buttonTheme.getFillColor(enabledRaisedButton),
+          //    /* TODO update theme.buttonColor ? */
+          //    (color) => _onButtonThemeChanged(buttonTheme.copyWith(buttonColor: color)),
+          //    padding: 2,
+          //    help: buttonColorHelp,
+          //  ),
+          //  ColorSelector(
+          //    'Raised button disabled color',
+          //    buttonTheme.getDisabledFillColor(disabledRaisedButton),
+          //    (color) => _onButtonThemeChanged(buttonTheme.copyWith(disabledColor: color)),
+          //    padding: 2,
+          //    help: disabledColorHelp,
+          //  ),
+          //]),
           FieldsRow([
             /* longpress / pressed color */
             ColorSelector(

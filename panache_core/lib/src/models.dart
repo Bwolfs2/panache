@@ -4,13 +4,6 @@ import 'package:flutter/material.dart';
 
 import 'utils/color_utils.dart';
 
-class User {
-  final String name;
-  final String avatarPath;
-
-  const User(this.name, this.avatarPath);
-}
-
 class PanacheTheme {
   final String id;
   final String name;
@@ -54,13 +47,7 @@ class PanacheTheme {
   }
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is PanacheTheme &&
-          runtimeType == other.runtimeType &&
-          id == other.id &&
-          name == other.name &&
-          primarySwatch == other.primarySwatch;
+  bool operator ==(Object other) => identical(this, other) || other is PanacheTheme && runtimeType == other.runtimeType && id == other.id && name == other.name && primarySwatch == other.primarySwatch;
 
   @override
   int get hashCode => id.hashCode ^ name.hashCode ^ primarySwatch.hashCode;

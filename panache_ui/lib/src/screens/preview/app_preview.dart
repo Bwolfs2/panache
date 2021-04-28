@@ -130,7 +130,6 @@ class ThemePreviewAppState extends State<ThemePreviewApp> with SingleTickerProvi
         showFAB = tabBarController.index == 0;
       });
     });
-    widget.model.initScreenshooter(_screenshot);
   }
 
   @override
@@ -148,19 +147,9 @@ class ThemePreviewAppState extends State<ThemePreviewApp> with SingleTickerProvi
               actions: <Widget>[
                 IconButton(icon: Icon(Icons.add), onPressed: () {}),
                 IconButton(icon: Icon(Icons.add_a_photo), onPressed: _screenshot),
-                /*IconButton(
-                      icon: Icon(Icons.create_new_folder),
-                      onPressed: () => Scaffold.of(context).openDrawer()),*/
               ],
             ),
-            floatingActionButton: tabBarController.index == 0
-                ? FloatingActionButton(
-                    child: Icon(
-                      Icons.check,
-                      /*color: widget.theme?.accentTextTheme?.button?.color,*/
-                    ),
-                    onPressed: () {})
-                : null,
+            floatingActionButton: tabBarController.index == 0 ? FloatingActionButton(child: Icon(Icons.check), onPressed: () {}) : null,
             floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
             drawer: Drawer(
               child: ListView(

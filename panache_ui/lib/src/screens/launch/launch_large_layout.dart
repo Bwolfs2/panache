@@ -55,43 +55,7 @@ class LaunchLayout extends StatelessWidget {
             onNewTheme: () => newTheme(model),
           ),
         ),
-        if ((model.themes?.isNotEmpty ?? false) && !kIsWeb) _buildHistoryThumbs(useLargeLayout, model)
       ],
     );
-  }
-
-  Widget _buildHistoryThumbs(bool useLargeLayout, ThemeModel model) {
-    final thumbSize = useLargeLayout ? Size(142, 250) : Size(56, 92);
-    final elements = [
-      Align(
-        alignment: Alignment.topRight,
-        child: TextButton(
-            child: Text(
-              editMode ? 'Done' : 'Edit',
-              style: TextStyle(fontWeight: FontWeight.normal, color: Colors.blueGrey),
-            ),
-            onPressed: toggleEditMode),
-      ),
-      Container(
-        color: Colors.blueGrey.shade200,
-        constraints: BoxConstraints.expand(height: thumbSize.height + (useLargeLayout ? 40 : 20)),
-        child: ListView(
-          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-          shrinkWrap: true,
-          itemExtent: thumbSize.width + 40,
-          scrollDirection: Axis.horizontal,
-          semanticChildCount: model.themes?.length ?? 0,
-          children: buildThemeThumbs(model.themes.where(_fileExists).toList() ?? [], basePath: '${model.dirPath ?? ''}/themes', size: thumbSize),
-        ),
-      )
-    ];
-    return Column(children: elements);
-    /*return useLargeLayout
-        ? Column(children: elements)
-        : Stack(children: elements.reversed.toList());*/
-  }
-
-  bool _fileExists(PanacheTheme theme) {
-    return kIsWeb ? false : model.themeExists(theme);
   }
 }

@@ -7,7 +7,7 @@ ThemeData buildAppTheme(ThemeData theme, MaterialColor primarySwatch) {
   final accentColor = primarySwatch[500];
   final primaryColorDark = primarySwatch[700];
 
-  var a = theme.copyWith(
+  return theme.copyWith(
     textTheme: textTheme.copyWith(
       bodyText1: textTheme.bodyText1.copyWith(fontSize: 12),
       bodyText2: textTheme.bodyText2.copyWith(fontSize: 12),
@@ -36,10 +36,4 @@ ThemeData buildAppTheme(ThemeData theme, MaterialColor primarySwatch) {
       cardColor: Colors.white,
     ),
   );
-
-  print('CursorColor: ${a.textSelectionTheme.cursorColor}');
-  print('SelectionColor: ${a.textSelectionTheme.selectionColor}');
-  print('SelectionHandleColor: ${a.textSelectionTheme.selectionHandleColor}');
-
-  return a;
 }

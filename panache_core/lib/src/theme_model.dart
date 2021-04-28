@@ -8,7 +8,7 @@ import 'package:scoped_model/scoped_model.dart';
 import 'converters/theme_converter.dart';
 import 'models.dart';
 import 'services/persistence_service.dart';
-import 'services/screenshot_service.dart';
+
 import 'services/theme_service.dart';
 import 'utils/uuid.dart';
 
@@ -29,8 +29,6 @@ class ThemeModel extends Model {
 
   PanacheTheme _currentTheme;
 
-  ScreenShooter _screenShooter;
-
   final LocalStorage localData;
 
   ThemeData get theme => _service.theme;
@@ -43,29 +41,17 @@ class ThemeModel extends Model {
 
   String get uuid => _uuid.generateV4();
 
-  User _currentUser;
-  User get user => _currentUser;
-
   Map<String, dynamic> get panelStates => localData.panelStates;
 
   double get scrollPosition => localData.scrollPosition;
 
-  final ScreenshotService screenService;
-
   ThemeModel({
     @required ThemeService service,
     @required this.localData,
-    //CloudService cloudService,
-    this.screenService,
   })  : _service = service,
         //_cloudService = cloudService,
         _themes = localData.themes {
     _service.init(onChange);
-    /*if (_cloudService != null)
-      _cloudService.currentUser$?.listen((user) {
-        _currentUser = user;
-        notifyListeners();
-      });*/
   }
 
   void newTheme({
@@ -97,17 +83,11 @@ class ThemeModel extends Model {
 
   void updateTheme(ThemeData updatedTheme) {
     _service.updateTheme(updatedTheme);
-    saveTheme();
 
     print('CursorColor: ${updatedTheme.textSelectionTheme.cursorColor}');
     print('SelectionColor: ${updatedTheme.textSelectionTheme.selectionColor}');
     print('SelectionHandleColor: ${updatedTheme.textSelectionTheme.selectionHandleColor}');
     notifyListeners();
-  }
-
-  void exportTheme({String name: 'theme'}) {
-    final code = themeToCode(theme);
-    _service.exportTheme(filename: name, code: code);
   }
 
   void updateColor({String property, Color color}) {
@@ -120,57 +100,14 @@ class ThemeModel extends Model {
     updateTheme(updatedTheme);
   }
 
-  void saveTheme() async {
-    final filename = _currentTheme.id;
-
-    final pngBytes = await _screenShooter();
-    if (pngBytes == null || pngBytes.length == 0) return;
-
-    print('ThemeModel.saveTheme... $screenService ${screenService == null}');
-    if (screenService != null) screenService.capture(filename, pngBytes);
-
-    _service.saveTheme(filename);
-  }
-
-  Future loadTheme(PanacheTheme theme) async {
-    _currentTheme = theme;
-    try {
-      final result = await _service.loadTheme('${theme.id}.json');
-
-      print('CursorColor: ${result.textSelectionTheme.cursorColor}');
-      print('SelectionColor: ${result.textSelectionTheme.selectionColor}');
-      print('SelectionHandleColor: ${result.textSelectionTheme.selectionHandleColor}');
-
-      notifyListeners();
-      return result;
-    } catch (error) {
-      print('ThemeModel.loadTheme... $error');
-    }
-    return null;
-  }
-
-  void initScreenshooter(ScreenShooter screenShooterKey) {
-    _screenShooter = screenShooterKey;
-    // FIXME ? Future.delayed(aSecond * 2, () => saveTheme());
-  }
-
   deleteTheme(PanacheTheme theme) async {
     localData.deleteTheme(theme);
     _themes.remove(theme);
-    /*final screenshot = File('${dir.path}/themes/${theme.id}.png');
-    if (await screenshot.exists()) await screenshot.delete();
-
-    final dataFile = File('${dir.path}/themes/${theme.id}.json');
-    if (await dataFile.exists()) await dataFile.delete();*/
 
     notifyListeners();
   }
 
   String themeDataPath(PanacheTheme theme) => '${_service.dir?.path ?? ''}/themes/${theme.id}.json';
-
-  bool themeExists(PanacheTheme theme) {
-    return _service.themeExists(themeDataPath(theme));
-  }
 
   void saveEditorState(Map<String, bool> panelStates, double pixels) => localData.saveEditorState(panelStates, pixels);
 

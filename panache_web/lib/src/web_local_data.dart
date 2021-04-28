@@ -11,13 +11,7 @@ const _themeKey = 'themeKey';
 /// local persistence
 class WebLocalData implements LocalStorage {
   /// synchronously loads local themes
-  List<PanacheTheme> get themes => []
-      /*_prefs
-          .getStringList(_themeKey)
-          ?.map<PanacheTheme>(_themeDataFromJson)
-          ?.toList() ??
-      <PanacheTheme>[]*/
-      ;
+  List<PanacheTheme> get themes => [];
 
   /// loads ( mobile layout)
   Map<String, dynamic> get panelStates {
@@ -32,10 +26,6 @@ class WebLocalData implements LocalStorage {
 
   /// clear local themes list
   // PanacheTheme _themeDataFromJson(String data) => PanacheTheme.fromJson(data);
-
-  // FIXME
-  /// initialisation du stockage
-  init() async {} /* => print('WebLocalData.init()')*/
 
   /// save the new local themes list
   void updateThemeList(List<PanacheTheme> themes) async {

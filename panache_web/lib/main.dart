@@ -4,7 +4,6 @@ import 'package:panache_core/panache_core.dart';
 import 'package:panache_ui/panache_ui.dart';
 import 'package:scoped_model/scoped_model.dart';
 
-import 'src/theme_exporter_web.dart';
 import 'src/web_local_data.dart';
 import 'src/web_theme_service.dart';
 
@@ -14,10 +13,7 @@ void main() async {
 
   final themeModel = ThemeModel(
     localData: localData,
-    service: WebThemeService(
-      themeExporter: exportTheme,
-      dirProvider: null,
-    ),
+    service: WebThemeService(),
   );
 
   runApp(PanacheApp(themeModel: themeModel));
@@ -30,28 +26,13 @@ class PanacheApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context).copyWith(
-        textSelectionTheme: TextSelectionThemeData(
-      cursorColor: Colors.indigo[500],
-      selectionColor: Colors.indigo[400],
-      selectionHandleColor: Colors.indigo[600],
-    ));
     return ScopedModel<ThemeModel>(
       model: themeModel,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: /*panacheTheme*/ buildAppTheme(theme, panachePrimarySwatch),
-        home: LaunchScreen(model: themeModel),
-        routes: {
-          '/home': (context) => LaunchScreen(model: themeModel),
-          '/editor': (context) => PanacheEditorScreen(),
-        },
+        theme: buildAppTheme(Theme.of(context), panachePrimarySwatch),
+        home: PanacheEditorScreen(),
       ),
     );
   }
-}
-
-exportTheme(String code, String filename) async {
-  print('exportTheme... $code');
-  jsSaveTheme(code, filename, (success) => print('export $success'));
 }
